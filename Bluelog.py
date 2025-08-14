@@ -15,28 +15,21 @@ import os
 from collections import defaultdict
 
 #Load Configurations
-CONFIG_DIR = os.path.join(os.path.dirname(__file__), "config")
+try: 
+    CONFIG_PATH = os.path.join(os.path.dirname(__file__), "config", "config.json")
+    with open(CONFIG_PATH, "r") as f:
+        config = json.load(f)
 
-#Apache Config 
-try:
-    config_path = os.path.join(os.path.dirname(__file__), "config", "apache-config.json")
-    with open(config_path, "r") as f:
-        apache_config = json.load(f)
-    ApachePaths = apache_config["paths"]
-    ApacheAgents = apache_config["agents"]
+    # Extracting sections
+    apache_config = config.get("apache", {})
+    ApachePaths = apache_config.get("paths", [])
+    ApacheAgents = apache_config.get("agents", [])
+
+    windows_config = config.get("windows", {})
+
 except FileNotFoundError:
-    ApachePaths, ApacheAgents = [], []
-    print("[WARNING] apache-config.json not found. Sensitive path and agent checks will be skipped.")
-
-#Windows config
-
-try:
-    windows_config_path = os.path.join(os.path.dirname(__file__), "config", "windows-config.json")
-    with open(windows_config_path, "r") as f:
-        windows_config = json.load(f)
-except FileNotFoundError:
-    windows_config = {}
-    print("[WARNING] windows-config.json not found. Windows event checks will be skipped.")
+    ApachePaths, ApacheAgents, windows_config = [], [], {}
+    print("[WARNING] config.json not found. Apache & Windows checks will be skipped.")
 
 #SSH log parser
 
@@ -118,41 +111,52 @@ def parse_windows_logs(log_file):
 
 #Output export formats
     
-def export_txt(result):
+def export_txt(result, log_type):
     output = "\n--- Bluelog output ---\n"
 
-    if all(isinstance(v, int) for v in result.values()):
+    if log_type == "ssh":
         for ip, count in sorted(result.items(), key=lambda x: x[1], reverse=True):
             output += f"{ip}: {count}\n"
 
-    elif all(isinstance(v, dict) for v in result.values()):
+    elif log_type == "apache":
         for ip, data in result.items():
             output += f"\nIP: {ip}\n"
             output += f"  - 404 Errors: {data['404_count']}\n"
             output += f"  - Sensitive Paths: {', '.join(data['sensitive_paths']) if data['sensitive_paths'] else 'None'}\n"
             output += f"  - Suspicious User-Agents: {', '.join(data['bad_agents']) if data['bad_agents'] else 'None'}\n"
 
-    else:
-        output += str(result)
+    elif log_type == "windows":
+        for event_type, data in result.items():
+            output += f"\nEvent: {event_type}\n"
+            output += f"  - Count: {data['count']}\n"
+            for detail in data["details"][:5]:  # show only first 5
+                details_str = "; ".join(f"{k}={v}" for k, v in detail.items())
+                output += f"    {details_str}\n"
 
     return output
 
-
-def export_csv(result):
-    if all(isinstance(v, int) for v in result.values()):
+def export_csv(result, log_type):
+    if log_type == "ssh":
         output = "IP,Failed_Attempts\n"
         for ip, count in sorted(result.items(), key=lambda x: x[1], reverse=True):
             output += f"{ip},{count}\n"
 
-    elif all(isinstance(v, dict) for v in result.values()):
+    elif log_type == "apache":
         output = "IP,404_Count,Sensitive_Paths,Suspicious_User_Agents\n"
         for ip, data in result.items():
             output += f"{ip},{data['404_count']}," \
                       f"\"{'|'.join(data['sensitive_paths'])}\"," \
                       f"\"{'|'.join(data['bad_agents'])}\"\n"
 
-    else:
-        output = "Data\n" + str(result) + "\n"
+    elif log_type == "windows":
+        output = "Event_Type,Count,Time,User,IP,Reason\n"
+        for event_type, data in result.items():
+            for detail in data["details"]:
+                output += f"{event_type},{data['count']}," \
+                          f"{detail.get('Time', 'N/A')}," \
+                          f"{detail.get('User', 'N/A')}," \
+                          f"{detail.get('IP', 'N/A')}," \
+                          f"{detail.get('Reason', 'N/A')}\n"
 
     return output
 
@@ -185,11 +189,11 @@ if __name__ == "__main__":
         #Select the export format
 
         if args.format == "csv":
-            output = export_csv(results)
+            output = export_csv(results, args.type)
         elif args.format == "json":
             output = export_json(results)
         else:
-            output = export_txt(results)
+            output = export_txt(results, args.type)
 
         #Save output or print it
         if args.output:
