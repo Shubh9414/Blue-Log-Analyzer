@@ -1,0 +1,27 @@
+{
+    "apache": {
+        "paths": ["/admin", "/.env", "/config.php"],
+        "agents": ["sqlmap", "nikto", "acunetix"]
+    },
+    "windows": {
+        "failed_logon_ids": {
+            "enabled": true,
+            "event_ids": [4625],
+            "_description": "Failed logon attempt"
+        },
+        "account_lockout_ids": {
+            "enabled": true,
+            "event_ids": [4740],
+            "_description": "Account lockout"
+        },
+        "suspicious_process_ids": {
+            "enabled": true,
+            "event_ids": [4688],
+            "_description": "Suspicious process creation"
+        },
+        "keywords": {
+            "enabled": true,
+            "values": ["mimikatz", "powershell.exe", "cmd.exe"]
+        }
+    }
+}
