@@ -54,8 +54,7 @@ All detection rules are defined in:
 config/config.json
 
 
-### Example snippet for Apache:
-
+### Example snippet for Apache: 
 "apache": {
   "paths": ["/admin", "/wp-admin"],
   "agents": ["sqlmap", "nmap"]
