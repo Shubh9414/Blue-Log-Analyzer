@@ -1,6 +1,6 @@
 """
 BlueLog v1 (Unified Log Analysis Tool)
-Author: Shubham 
+Author: Shubham Singh
 Description:
     A command-line tool to analyze SSH, Apache, and Windows logs for suspicious activity.
     - SSH: Detect brute force attempts.
