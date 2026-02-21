@@ -25,6 +25,7 @@ Blue Log utilizes dedicated logic for each log type, driven by a centralized `co
 ## Installation & Usage
 
 ### 1. Setup
+
 ```bash
 git clone [https://github.com/Shubh9414/Blue-Log-Analyzer.git](https://github.com/Shubh9414/Blue-Log-Analyzer.git)
 cd Blue-Log-Analyzer
@@ -32,6 +33,7 @@ pip install -r requirements.txt
 ```
 
 ### 2. Execution
+
 Run the tool by specifying the log type and the target file:
 
 Analyze SSH Logs:
@@ -57,10 +59,12 @@ python Bluelog.py --type windows logs/windows.json --format json
 ## Roadmap (v2.0)
 
 Threat Intel Enrichment: Direct integration with AbuseIPDB and VirusTotal APIs for real-time IOC scoring.
-+1
-
-
 Cloud Native Support: Extending parsing capabilities to AWS CloudTrail and Azure Activity Logs.
-
-
 Advanced Configuration: Transitioning to YAML for complex detection rule definitions.
+
+---
+
+## Technical Arsenal
+
+Language: Python 3.x 
+Key Libraries: json, csv, argparse, requests (for API enrichment)
