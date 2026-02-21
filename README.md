@@ -31,7 +31,7 @@ cd Blue-Log-Analyzer
 pip install -r requirements.txt
 ```
 
-###2. Execution
+### 2. Execution
 Run the tool by specifying the log type and the target file:
 
 Analyze SSH Logs:
