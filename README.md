@@ -52,6 +52,8 @@ Analyze Windows Event Logs (JSON):
 python Bluelog.py --type windows logs/windows.json --format json
 ```
 
+---
+
 ## Roadmap (v2.0)
 
 Threat Intel Enrichment: Direct integration with AbuseIPDB and VirusTotal APIs for real-time IOC scoring.
