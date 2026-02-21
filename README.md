@@ -58,13 +58,13 @@ python Bluelog.py --type windows logs/windows.json --format json
 
 ## Roadmap (v2.0)
 
-Threat Intel Enrichment: Direct integration with AbuseIPDB and VirusTotal APIs for real-time IOC scoring.
-Cloud Native Support: Extending parsing capabilities to AWS CloudTrail and Azure Activity Logs.
-Advanced Configuration: Transitioning to YAML for complex detection rule definitions.
+* Threat Intel Enrichment: Direct integration with AbuseIPDB and VirusTotal APIs for real-time IOC scoring.
+* Cloud Native Support: Extending parsing capabilities to AWS CloudTrail and Azure Activity Logs.
+* Advanced Configuration: Transitioning to YAML for complex detection rule definitions.
 
 ---
 
 ## Technical Arsenal
 
-Language: Python 3.x 
-Key Libraries: json, csv, argparse, requests (for API enrichment)
+* Language: Python 3.x 
+* Key Libraries: json, csv, argparse, requests (for API enrichment)
